@@ -17,7 +17,7 @@ jobs:
             - name: run linter
               run: npm run lint
             - name: run typescript Type Check
-              run: npm run type-check
+              run: npm run typecheck
             - name: display job done 
               run: echo "Job done! 🫡"
 
