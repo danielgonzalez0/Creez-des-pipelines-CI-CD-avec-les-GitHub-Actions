@@ -2,7 +2,7 @@ name: Complex workflow with multi jobs
 
 on:
   push: 
-    branches: ["partie-2/chapitre-2/section-4-fin", "partie-3/chapitre-1"]
+    branches: ["partie-2/chapitre-2/section-4-fin"]
 
 jobs:
   Lint:
