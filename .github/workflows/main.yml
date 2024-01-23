@@ -67,7 +67,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: node-modules
-          path: node_modules.tar.gz
+          path: .
 
       - name: Extract node_modules
         run: tar -xzf node_modules.tar.gz
@@ -107,7 +107,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: node-modules
-          path: node_modules.tar.gz
+          path: .
 
       - name: Extract node_modules
         run: tar -xzf node_modules.tar.gz
