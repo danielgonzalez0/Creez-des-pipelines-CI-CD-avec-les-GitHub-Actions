@@ -34,12 +34,16 @@ jobs:
         run:
           npm run lint
 
-          # Save node_modules as an artifact
+      - name: Save artifacts (create archive)
+        run: tar -czf node_modules.tar.gz node_modules
+        # The above command creates a compressed archive (node_modules.tar.gz) of the node_modules directory
+
+        # Save the archive as an artifact
       - name: Save artifacts
         uses: actions/upload-artifact@v2
         with:
           name: node-modules
-          path: node_modules
+          path: node_modules.tar.gz
 
   build-and-test:
     runs-on: ubuntu-latest
@@ -59,11 +63,15 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: "npm"
 
-      # Download node_modules artifact
       - name: Download node_modules
         uses: actions/download-artifact@v2
         with:
           name: node-modules
+          path: node_modules.tar.gz
+
+      - name: Extract node_modules
+        run: tar -xzf node_modules.tar.gz
+        # The above command extracts the contents of node_modules.tar.gz
 
       - name: test
         run: npm run test
@@ -95,11 +103,15 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: "npm"
 
-      # Download node_modules artifact
       - name: Download node_modules
         uses: actions/download-artifact@v2
         with:
           name: node-modules
+          path: node_modules.tar.gz
+
+      - name: Extract node_modules
+        run: tar -xzf node_modules.tar.gz
+        # The above command extracts the contents of node_modules.tar.gz
 
       - name: Build
         run: npm run build
