@@ -1,6 +1,8 @@
 name: Install and Run Lint and TypeCheck
 
-on: push
+on: 
+  push: 
+    branches: [ main ]
 
 jobs:
     main:
@@ -22,7 +24,7 @@ jobs:
 
             - name: run typescript Type Check
               run: npm run typecheck
-              
+
             - name: display job done 
               run: echo "Job done! 🫡"
 
