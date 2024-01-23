@@ -10,18 +10,26 @@ permissions:
   id-token: write
 
 
+env:
+NODE_VERSIONS: [12, 14, 16, 18]
+
 jobs:
 
   lint: 
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node: ${{ env.NODE_VERSIONS }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: install nodes 18
+      - name: install nodes ${{ matrix.node }}
         uses: actions/setup-node@v2
         with:
-          node-version: 18
+          node-version: ${{ matrix.node }}
           cache: 'npm'
 
       - name: Install dependencies
@@ -29,23 +37,37 @@ jobs:
 
       - name: Lint
         run: npm run lint
+
+            # Save node_modules as an artifact
+      - name: Save artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: node-modules
+          path: node_modules
   
   build-and-test: 
     runs-on: ubuntu-latest
     needs: lint
 
+    strategy:
+      matrix:
+        node: ${{ env.NODE_VERSIONS }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: install nodes 18
+      - name: install nodes ${{ matrix.node }}
         uses: actions/setup-node@v2
         with:
-          node-version: 18
+          node-version: ${{ matrix.node }}
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      # Download node_modules artifact
+      - name: Download node_modules
+        uses: actions/download-artifact@v2
+        with:
+          name: node-modules
       
       - name: test
         run: npm run test
@@ -63,18 +85,25 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-test
 
+    strategy:
+      matrix:
+        node: ${{ env.NODE_VERSIONS }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: install nodes 18
+      - name: install nodes ${{ matrix.node }}
         uses: actions/setup-node@v2
         with:
-          node-version: 18
+          node-version: ${{ matrix.node }}
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm ci
+      # Download node_modules artifact
+      - name: Download node_modules
+        uses: actions/download-artifact@v2
+        with:
+          name: node-modules
 
       - name: Build
         run: npm run build
