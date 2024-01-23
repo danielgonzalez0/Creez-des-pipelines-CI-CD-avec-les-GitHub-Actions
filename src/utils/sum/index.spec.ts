@@ -9,7 +9,6 @@ describe('makeSum Unit Test Suites', () => {
 
   it('should return 4', () => {
     expect(makeSum(2, 2)).toEqual(4)
-    expect(makeSum(2, 2)).toEqual(5)
   })
 })
 
