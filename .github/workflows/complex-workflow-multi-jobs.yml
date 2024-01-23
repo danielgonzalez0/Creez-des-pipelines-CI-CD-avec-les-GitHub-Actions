@@ -2,7 +2,7 @@ name: Complex workflow with multi jobs
 
 on:
   push: 
-    branches: ["partie-2/chapitre-2/section-4-fin"]
+    branches: ["partie-2/chapitre-2/section-4-fin", "partie-3/chapitre-1"]
 
 jobs:
   Lint:
@@ -18,7 +18,7 @@ jobs:
           cache: 'npm'
       
       - name: install dependencies
-        run: npm install
+        run: npm ci
       
       - name: run linter
         run: npm run lint
@@ -40,11 +40,14 @@ jobs:
           cache: 'npm'
       
       - name: install dependencies
-        run: npm install
-        
+        run: npm ci
+
       - name: run test
         run: npm run test
 
       - name: run build
         run: npm run build
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v3
 
