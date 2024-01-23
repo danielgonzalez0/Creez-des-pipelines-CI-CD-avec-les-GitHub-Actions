@@ -5,9 +5,9 @@ on:
     branches: ["partie-3/chapitre-1"]
 
 permissions:
-    contents: read
-    pages: write
-    id-token: write
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   deploy:
